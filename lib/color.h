@@ -1,7 +1,3 @@
-//
-// Created by danie on 09/09/2021.
-//
-
 #ifndef PIET_COLOR_H
 #define PIET_COLOR_H
 
