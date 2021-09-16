@@ -6,30 +6,30 @@
 #include <string>
 #include <cassert>
 
-namespace image{
-    struct pixel_type{
+namespace piet{
+    struct pixel{
         uint8_t R, G, B;
-        bool operator==(const image::pixel_type& other) const {
+        bool operator==(const piet::pixel& other) const {
             return R == other.R && G == other.G && B == other.B;
         }
 
-        friend std::ostream& operator<<(std::ostream& os, const image::pixel_type& pixel) {
+        friend std::ostream& operator<<(std::ostream& os, const piet::pixel& pixel) {
             return os<<"("<<(int)pixel.R<<","<<(int)pixel.G<<","<<(int)pixel.B<<")";
         }
     };
 
-    class image_type{
+    class image{
     private:
         unsigned int width, height;
-        std::vector<std::vector<image::pixel_type>> pixels;
+        std::vector<std::vector<piet::pixel>> pixels;
     public:
-        image_type(): width(0), height(0){}
-        image_type(unsigned int width, unsigned int height):
+        image(): width(0), height(0){}
+        image(unsigned int width, unsigned int height):
             width(width),
             height(height),
-            pixels(std::vector<std::vector<image::pixel_type>>(height, std::vector<image::pixel_type>(width))){}
+            pixels(std::vector<std::vector<piet::pixel>>(height, std::vector<piet::pixel>(width))){}
 
-        const image::pixel_type& get_pixel(unsigned int row, unsigned int col) const{
+        const piet::pixel& get_pixel(unsigned int row, unsigned int col) const{
             assert(row >= 0 && row < height && col >= 0 && col < width);
             return pixels[row][col];
         }
@@ -39,7 +39,7 @@ namespace image{
             pixels[row][col] = {R, G, B};
         }
 
-        bool operator==(const image::image_type& other) const {
+        bool operator==(const piet::image& other) const {
             if(width != other.width || height != other.height) return false;
             return pixels == other.pixels;
         }
@@ -48,10 +48,10 @@ namespace image{
         unsigned int get_width(){ return width; }
     };
 
-    const image::image_type EMPTY_IMAGE = image::image_type();
+    const image EMPTY_IMAGE = piet::image();
 
-    image::image_type read(const std::string& fname);
-    image::image_type png_read(const std::string& fname);
+    image read(const std::string& fname);
+    image png_read(const std::string& fname);
 }
 
 #endif //PIET_IMAGE_READ_H

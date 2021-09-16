@@ -11,16 +11,16 @@ bool hasEnding (std::string const &fullString, std::string const &ending) {
     }
 }
 
-image::image_type image::read(const std::string& fname){
-    if(hasEnding(fname, ".png") || hasEnding(fname, ".PNG")) return image::png_read(fname);
-    else return image::EMPTY_IMAGE;
+piet::image piet::read(const std::string& fname){
+    if(hasEnding(fname, ".png") || hasEnding(fname, ".PNG")) return piet::png_read(fname);
+    else return piet::EMPTY_IMAGE;
 }
 
-image::image_type image::png_read(const std::string &fname) {
+piet::image piet::png_read(const std::string &fname) {
     FILE *fp = fopen(R"(C:\Users\danie\CLionProjects\Piet\samples\Piet_hello.png)", "rb");
     if (!fp){
         std::cerr<<"Can't open file\n";
-        return image::EMPTY_IMAGE;
+        return piet::EMPTY_IMAGE;
     }
     png_structp png;
     png_infop info_ptr;
@@ -29,20 +29,20 @@ image::image_type image::png_read(const std::string &fname) {
 
     if (png == NULL) {
         fclose(fp);
-        return image::EMPTY_IMAGE;
+        return piet::EMPTY_IMAGE;
     }
 
     info_ptr = png_create_info_struct(png);
     if (info_ptr == NULL) {
         fclose(fp);
         png_destroy_read_struct(&png, NULL, NULL);
-        return image::EMPTY_IMAGE;
+        return piet::EMPTY_IMAGE;
     }
 
     if (setjmp(png_jmpbuf(png))) {
         png_destroy_read_struct(&png, &info_ptr, NULL);
         fclose(fp);
-        return image::EMPTY_IMAGE;
+        return piet::EMPTY_IMAGE;
     }
 
     png_init_io(png, fp);
@@ -97,7 +97,7 @@ image::image_type image::png_read(const std::string &fname) {
 
     fclose(fp);
 
-    image::image_type img(width, height);
+    piet::image img(width, height);
     for(int y = 0; y < height; y++) {
         png_bytep row = row_pointers[y];
         for(int x = 0; x < width; x++) {
