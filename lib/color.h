@@ -20,8 +20,7 @@ namespace color{
             index(index),
             value_names {{value_names_list...}}{}
         unsigned int index;
-        inline static std::vector<std::shared_ptr<color_trait<T, value_names_list...>>> instances;
-        inline static bool instances_gen = false;
+        static std::vector<std::shared_ptr<color_trait<T, value_names_list...>>> instances;
 
         template<size_t ...I>
         static void populate_instances(std::index_sequence<I...> seq){
@@ -36,11 +35,10 @@ namespace color{
         color_trait(color::color_trait<T, value_names_list...>&& trait) = delete;
         void operator=(const color::color_trait<T, value_names_list...>& trait) = delete;
         void operator=(color::color_trait<T, value_names_list...>&& trait) = delete;
-        ~color_trait(){ }
+        ~color_trait(){ std::cout<<"Destroying "<<*this<<std::endl; }
 
         static const color_trait<T, value_names_list...>& get_instance(unsigned int idx){
-            if(!instances_gen){
-                instances_gen = true;
+            if(instances.empty()){
                 auto idx_seq = std::make_index_sequence<sizeof...(value_names_list)>();
                 populate_instances(idx_seq);
             }
@@ -60,15 +58,19 @@ namespace color{
 
         bool operator==(const color::color_trait<T, value_names_list...>& other) const {return index == other.index;}
     };
+
+    template<printable T, T ...value_names_list>
+    std::vector<std::shared_ptr<color_trait<T, value_names_list...>>> color_trait<T, value_names_list...>::instances{};
+
 }
 
 namespace hue{
-    static constexpr char STR_RED[] = "RED";
-    static constexpr char STR_YELLOW[] = "YELLOW";
-    static constexpr char STR_GREEN[] = "GREEN";
-    static constexpr char STR_CYAN[] = "CYAN";
-    static constexpr char STR_BLUE[] = "BLUE";
-    static constexpr char STR_MAGENTA[] = "MAGENTA";
+    constexpr char STR_RED[] = "RED";
+    constexpr char STR_YELLOW[] = "YELLOW";
+    constexpr char STR_GREEN[] = "GREEN";
+    constexpr char STR_CYAN[] = "CYAN";
+    constexpr char STR_BLUE[] = "BLUE";
+    constexpr char STR_MAGENTA[] = "MAGENTA";
 
     using hue_type = color::color_trait<const char*,
         hue::STR_RED,
@@ -89,9 +91,9 @@ namespace hue{
 }
 
 namespace brightness{
-    static constexpr char STR_DARK[] = "DARK";
-    static constexpr char STR_NORMAL[] = "NORMAL";
-    static constexpr char STR_BRIGHT[] = "BRIGHT";
+    constexpr char STR_DARK[] = "DARK";
+    constexpr char STR_NORMAL[] = "NORMAL";
+    constexpr char STR_BRIGHT[] = "BRIGHT";
 
     using brightness_type = color::color_trait<const char*,
         brightness::STR_DARK,
