@@ -1,23 +1,18 @@
 #include <iostream>
 #include <codel.h>
 #include <color.h>
-#include <image_read.h>
+#include <image.h>
 
 int main() {
-//    image::image_type img = image::read(R"(C:\Users\danie\CLionProjects\Piet\samples\Piet_hello.png)");
-//
-//    std::cout<<"Image read: "<<img.get_width()<<"x"<<img.get_height()<<"\n";
-//    std::cout<<img.get_pixel(0, 0)<<"\n";
+    piet::image img = piet::read_image(R"(C:\Users\danie\CLionProjects\Piet\samples\Piet_hello.png)");
 
-    std::cout<<"Setup done"<<std::endl;
+    std::cout<<"Image read_image: "<<img.get_width()<<"x"<<img.get_height()<<"\n";
 
-    const piet::color& test_col{piet::color::color_category::BLACK};
-
-    std::cout<<test_col<<"\n";
-
-    piet::codel test_codel{};
-
-    std::cout<<test_codel<<"\n"<<(test_codel == piet::NULL_CODEL)<<"\n";
+    for(int i=0;i<img.get_width();i++){
+        piet::pixel pixel = img.get_pixel(0, i);
+        piet::color pixel_color{pixel};
+        std::cout<<"[0 "<<i<<"]: "<<pixel<<" "<<pixel_color<<"\n";
+    }
 
     return 0;
 }

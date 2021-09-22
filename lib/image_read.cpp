@@ -1,18 +1,18 @@
-#include <image_read.h>
+#include <image.h>
 
 #include <png.h>
 #include <iostream>
 
-bool hasEnding (std::string const &fullString, std::string const &ending) {
-    if (fullString.length() >= ending.length()) {
-        return (0 == fullString.compare (fullString.length() - ending.length(), ending.length(), ending));
+bool has_ending (std::string const &full_string, std::string const &ending) {
+    if (full_string.length() >= ending.length()) {
+        return (0 == full_string.compare (full_string.length() - ending.length(), ending.length(), ending));
     } else {
         return false;
     }
 }
 
-piet::image piet::read(const std::string& fname){
-    if(hasEnding(fname, ".png") || hasEnding(fname, ".PNG")) return piet::png_read(fname);
+piet::image piet::read_image(const std::string& fname){
+    if(has_ending(fname, ".png") || has_ending(fname, ".PNG")) return piet::png_read(fname);
     else return piet::EMPTY_IMAGE;
 }
 

@@ -16,6 +16,8 @@ namespace piet{
         friend std::ostream& operator<<(std::ostream& os, const piet::pixel& pixel) {
             return os<<"("<<(int)pixel.R<<","<<(int)pixel.G<<","<<(int)pixel.B<<")";
         }
+
+        uint32_t hex(){ return R << 16 | G << 8 | B; }
     };
 
     class image{
@@ -44,13 +46,13 @@ namespace piet{
             return pixels == other.pixels;
         }
 
-        unsigned int get_height(){ return height; }
-        unsigned int get_width(){ return width; }
+        unsigned int get_height() const { return height; }
+        unsigned int get_width() const { return width; }
     };
 
     const image EMPTY_IMAGE = piet::image();
 
-    image read(const std::string& fname);
+    image read_image(const std::string& fname);
     image png_read(const std::string& fname);
 }
 
