@@ -37,7 +37,7 @@ namespace piet{
         color_trait(piet::color_trait<T, value_names_list...>&& trait) = delete;
         void operator=(const piet::color_trait<T, value_names_list...>& trait) = delete;
         void operator=(piet::color_trait<T, value_names_list...>&& trait) = delete;
-        ~color_trait(){ std::cout<<"Destroying "<<*this<<std::endl; }
+        ~color_trait(){ /*std::cout<<"[DEBUG] Destroying "<<*this<<" trait"<<std::endl*/; }
 
         static const std::shared_ptr<color_trait<T, value_names_list...>> get_instance(unsigned int idx){
             if(instances.empty()){

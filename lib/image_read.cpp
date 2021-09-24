@@ -1,7 +1,6 @@
 #include <image.h>
 
 #include <png.h>
-#include <iostream>
 
 bool has_ending (std::string const &full_string, std::string const &ending) {
     if (full_string.length() >= ending.length()) {
@@ -55,8 +54,6 @@ piet::image piet::png_read(const std::string &fname) {
     png_uint_32 height     = png_get_image_height(png, info);
     png_byte color_type = png_get_color_type(png, info);
     png_byte bit_depth  = png_get_bit_depth(png, info);
-
-    std::cout<<width<<"x"<<height<<" "<<(int)color_type<<" "<<(int)bit_depth<<"\n";
 
     // Read any color_type into 8bit depth, RGBA format.
     // See http://www.libpng.org/pub/png/libpng-manual.txt
