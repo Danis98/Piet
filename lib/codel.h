@@ -1,6 +1,8 @@
 #ifndef PIET_CODEL_H
 #define PIET_CODEL_H
 
+#include <map>
+
 #include <color.h>
 #include <image.h>
 
@@ -13,8 +15,8 @@ namespace piet{
             return os<<"("<<position.row<<", "<<position.col<<")";
         }
 
-        unsigned int get_row(){ return row; }
-        unsigned int get_col(){ return col; }
+        unsigned int get_row() const { return row; }
+        unsigned int get_col() const { return col; }
 
         bool operator==(const piet::position& other) const {return row == other.row && col == other.col;}
     private:
@@ -30,17 +32,6 @@ namespace piet{
 
         codel_block(): block_color(piet::color::BLACK){}
         codel_block(piet::color block_color): block_color(block_color) {}
-
-        /*codel_block& operator=(codel_block& other){
-            if(this == &other) return *this;
-
-            block_color = other.block_color;
-            for(int i=0;i<4;i++){
-                next_codels[i][0] = other.next_codels[i][0];
-                next_codels[i][1] = other.next_codels[i][1];
-            }
-            return *this;
-        }*/
     };
 
     class codel{
@@ -51,7 +42,7 @@ namespace piet{
             is_null_codel(true),
             codel_position({0, 0}),
             codel_color(piet::color::BLACK){}
-        codel(piet::codel_block& codel_block, piet::position position, piet::color color):
+        codel(piet::position position, piet::color color):
             codel_position(position),
             codel_color(color),
             is_null_codel(false){}
@@ -81,8 +72,12 @@ namespace piet{
     private:
         unsigned int height, width;
         std::vector<std::vector<piet::codel>> codels;
+        std::map<piet::position, piet::codel_block> block_map;
     public:
         codel_grid(const piet::image& image);
+        void explore_block(std::vector<std::vector<bool>>& added,
+                            const piet::image& image,
+                            const piet::position& start);
 
         const piet::codel& get(unsigned int row, unsigned int col){ return codels[row][col]; }
     };

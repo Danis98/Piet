@@ -30,14 +30,24 @@ namespace piet{
     using direction_pointer = piet::modular_counter<4>;
     using codel_chooser = piet::modular_counter<2>;
 
+    class direction_state{
+    private:
+        piet::direction_pointer dp;
+        piet::codel_chooser cc;
+        int tries;
+    public:
+        direction_state(): dp(0), cc(0), tries(0){}
+
+        void operator++();
+
+        bool operator==(const piet::direction_state& other) const {return dp == other.dp && cc == other.cc;}
+    };
+
     class execution_state{
     private:
         piet::codel& current_codel;
-        piet::direction_pointer dp;
-        piet::codel_chooser cc;
+        piet::direction_state ds;
         std::stack<int> stack;
-
-        execution_state(){}
     };
 }
 
