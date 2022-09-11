@@ -3,8 +3,8 @@
 
 #include <map>
 
-#include <color.h>
-#include <image.h>
+#include "color.h"
+#include "image.h"
 
 namespace piet{
     class position{

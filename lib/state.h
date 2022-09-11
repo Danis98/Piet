@@ -1,7 +1,7 @@
 #ifndef PIET_STATE_H
 #define PIET_STATE_H
 
-#include <codel.h>
+#include "codel.h"
 
 namespace piet{
     template<unsigned int N>

@@ -1,5 +1,5 @@
-#include <color.h>
-#include <image.h>
+#include "color.h"
+#include "image.h"
 
 
 constexpr char piet::hue::STR_RED[] = "RED";

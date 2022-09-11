@@ -7,7 +7,8 @@
 #include <typeinfo>
 #include <memory>
 #include <cassert>
-#include <image.h>
+
+#include "image.h"
 
 namespace piet{
     template<typename T>

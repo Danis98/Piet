@@ -1,4 +1,4 @@
-#include <state.h>
+#include "state.h"
 
 void piet::direction_state::operator++() {
     tries++;
