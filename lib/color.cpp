@@ -1,22 +1,11 @@
 #include "color.h"
-#include "image.h"
 
+namespace piet{
 
-constexpr char piet::hue::STR_RED[] = "RED";
-constexpr char piet::hue::STR_YELLOW[] = "YELLOW";
-constexpr char piet::hue::STR_GREEN[] = "GREEN";
-constexpr char piet::hue::STR_CYAN[] = "CYAN";
-constexpr char piet::hue::STR_BLUE[] = "BLUE";
-constexpr char piet::hue::STR_MAGENTA[] = "MAGENTA";
+color color::BLACK = color{color::color_category::BLACK};
+color color::WHITE = color{color::color_category::WHITE};
 
-constexpr char piet::brightness::STR_DARK[] = "DARK";
-constexpr char piet::brightness::STR_NORMAL[] = "NORMAL";
-constexpr char piet::brightness::STR_BRIGHT[] = "BRIGHT";
-
-piet::color piet::color::BLACK{piet::color::color_category::BLACK};
-piet::color piet::color::WHITE{piet::color::color_category::WHITE};
-
-piet::color::color_category piet::color::get_color_category(uint32_t hex){
+color::color_category color::get_color_category(uint32_t hex){
     switch(hex){
         case 0xFFC0C0:
         case 0xFF0000:
@@ -35,14 +24,14 @@ piet::color::color_category piet::color::get_color_category(uint32_t hex){
         case 0x0000C0:
         case 0xFFC0FF:
         case 0xFF00FF:
-        case 0xC000C0:  return piet::color::color_category::COLOR;
-        case 0xFFFFFF:  return piet::color::color_category::WHITE;
+        case 0xC000C0:  return color::color_category::COLOR;
+        case 0xFFFFFF:  return color::color_category::WHITE;
         case 0x000000:
-        default:        return piet::color::color_category::BLACK;
+        default:        return color::color_category::BLACK;
     }
 }
 
-piet::hue::hue_ptr piet::color::get_color_hue(uint32_t hex){
+hue_trait color::get_color_hue(uint32_t hex){
     switch(hex){
         case 0xFFC0C0:
         case 0xFF0000:
@@ -66,7 +55,7 @@ piet::hue::hue_ptr piet::color::get_color_hue(uint32_t hex){
     }
 }
 
-piet::brightness::brightness_ptr piet::color::get_color_brightness(uint32_t hex){
+brightness_trait color::get_color_brightness(uint32_t hex){
     switch(hex){
         case 0xFFC0C0:
         case 0xFFFFC0:
@@ -88,4 +77,6 @@ piet::brightness::brightness_ptr piet::color::get_color_brightness(uint32_t hex)
         case 0xC000C0:
         default:        return brightness::DARK;
     }
+}
+
 }

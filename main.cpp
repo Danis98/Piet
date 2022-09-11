@@ -1,7 +1,8 @@
 #include <iostream>
-#include <codel.h>
-#include <color.h>
-#include <image.h>
+
+#include "lib/codel.h"
+#include "lib/color.h"
+#include "lib/image.h"
 
 int main() {
     piet::image img = piet::read_image(R"(C:\Users\danie\CLionProjects\Piet\samples\Piet_hello.png)");
