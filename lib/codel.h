@@ -30,7 +30,7 @@ namespace piet{
     public:
         static codel_block NULL_BLOCK;
 
-        codel_block(): block_color(color::BLACK){}
+        codel_block(): block_color(hue::INVALID, brightness::INVALID){}
         codel_block(color block_color): block_color(block_color) {}
     };
 
@@ -41,7 +41,7 @@ namespace piet{
         codel():
             is_null_codel(true),
             codel_position({0, 0}),
-            codel_color(color::BLACK){}
+            codel_color(hue::INVALID, brightness::INVALID){}
         codel(position position, color color):
             codel_position(position),
             codel_color(color),
@@ -69,10 +69,6 @@ namespace piet{
     };
 
     class codel_grid{
-    private:
-        unsigned int height, width;
-        std::vector<std::vector<codel>> codels;
-        std::map<position, codel_block> block_map;
     public:
         codel_grid(const image& image);
         void explore_block(std::vector<std::vector<bool>>& added,
@@ -80,6 +76,12 @@ namespace piet{
                             const position& start);
 
         const codel& get(unsigned int row, unsigned int col){ return codels[row][col]; }
+
+    private:
+        unsigned int height, width;
+        std::vector<std::vector<codel>> codels;
+        std::vector<codel_block> blocks;
+        codel_block& start_block = codel_block::NULL_BLOCK;
     };
 }
 

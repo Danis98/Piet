@@ -12,7 +12,6 @@ void codel_grid::explore_block(std::vector<std::vector<bool>>& added,
                    const image& image,
                    const position& start){
     color block_color = image.get_pixel(start.get_row(), start.get_col());
-    std::cout<<"Exploring from "<<start<<", block color is "<<block_color<<"\n";
     std::queue<position> Q;
     Q.push(start);
     added[start.get_row()][start.get_col()] = true;
