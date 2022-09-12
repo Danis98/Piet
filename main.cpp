@@ -5,7 +5,7 @@
 #include "lib/image.h"
 
 int main() {
-    piet::image img = piet::read_image(R"(C:\Users\danie\CLionProjects\Piet\samples\Piet_hello.png)");
+    piet::image img = piet::read_image(".\\samples\\Piet_hello.png");
 
     std::cout<<"Image read_image: "<<img.get_width()<<"x"<<img.get_height()<<"\n";
 

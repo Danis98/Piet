@@ -1,4 +1,5 @@
 cmake-build-debug/
+.vscode/
 .idea/
 bazel-bin/
 bazel-out/
