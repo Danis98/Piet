@@ -1,3 +1,8 @@
+/**
+ * The logic for constructing the codel grid and the blocks within.
+ * Also caches the next codels for each block for every DP/CC combination
+**/
+
 #include <queue>
 
 #include "codel.h"
@@ -8,6 +13,8 @@ namespace piet{
 codel_block codel_block::NULL_BLOCK{};
 codel codel::NULL_CODEL{};
 
+// Create codel block containing start codel.
+// Just a simple DFS on the grid
 void codel_grid::explore_block(std::vector<std::vector<bool>>& added,
                    const image& image,
                    const position& start){
@@ -28,6 +35,7 @@ codel_grid::codel_grid(const image& image): height(image.get_height()), width(im
 
     std::vector<std::vector<bool>> added(height, std::vector<bool>(width, false));
 
+    // Iterate through all codels and do flood search
     for(unsigned int row=0;row<height;row++){
         for(unsigned int col=0;col<width;col++){
             if(added[row][col]) continue;

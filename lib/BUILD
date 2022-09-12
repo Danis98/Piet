@@ -5,8 +5,7 @@ cc_library(
     srcs=[
         "codel.cpp",
         "color.cpp",
-        "image_read.cpp",
-        "state.cpp"
+        "image_read.cpp"
     ],
     hdrs=[
         "codel.h",

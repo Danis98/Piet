@@ -1,3 +1,15 @@
+/**
+ * In Piet, colors are defined by hue & brightness.
+ * Hue can be red, yellow, green, cyan, blue and magenta.
+ * Brightness can be dark, normal or bright.
+ * There are also special white and black colors.
+ * 
+ * Instructions in Piet are defined by the delta of hue & brightness
+ * when we go from one codel block to another.
+ * Therefore, we need to be able to "subtract" colors: for example
+ * NORMAL GREEN - DARK RED = (1, 1)
+**/
+
 #ifndef PIET_COLOR_H
 #define PIET_COLOR_H
 
@@ -7,6 +19,7 @@
 #include "image.h"
 
 namespace piet {
+    // Generic class that describes a color trait. In our case either hue or brightness
     template<class trait_names>
     class color_trait {
     public:
@@ -19,11 +32,11 @@ namespace piet {
             return (_index + N - other._index) % N;
         }
 
-        friend std::ostream& operator<<(std::ostream& os, color_trait<trait_names> trait){
+        friend std::ostream& operator<<(std::ostream& os, color_trait<trait_names> trait) {
             return os<<trait.get_value();
         }
 
-        inline std::string_view get_value(){
+        inline std::string_view get_value() {
             return trait_names::names[_index];
         }
 
@@ -33,6 +46,8 @@ namespace piet {
      private:
         unsigned int _index;
     };
+
+    // Define hues
 
     constexpr unsigned int NUM_HUES = 7;
 
@@ -60,6 +75,7 @@ namespace piet {
     const static hue_trait INVALID(6);
     }
 
+    //Define brightnesses
 
     constexpr unsigned int NUM_BRIGHT = 4;
 
@@ -81,6 +97,8 @@ namespace piet {
     const static brightness_trait INVALID(3);
     }
 
+    // Apart from hue & brightness, we need to check for the special
+    // cases of WHITE and BLACK colors, which behave differently
     class color{
     public:
         enum class color_category{ WHITE, BLACK, COLOR };
@@ -103,15 +121,20 @@ namespace piet {
             assert(category != color_category::COLOR);
         }
 
-        color(piet::pixel pixel): color(pixel.hex()){}
+        // It is convenient to have this constructor since we are going to
+        // be constructing colors from pixels anyways
+        color(pixel pixel)
+            : color(pixel.hex())
+        {}
 
-        color(uint32_t hex):
-            category(get_color_category(hex)),
-            hue(get_color_hue(hex)),
-            brightness(get_color_brightness(hex)){}
+        color(uint32_t hex)
+            : category(get_color_category(hex))
+            , hue(get_color_hue(hex))
+            , brightness(get_color_brightness(hex))
+        {}
 
-        friend std::ostream& operator<<(std::ostream& os, const color& color){
-            switch(color.category){
+        friend std::ostream& operator<<(std::ostream& os, const color& color) {
+            switch(color.category) {
             case color_category::COLOR:
                 return os<<color.brightness<<" "<<color.hue;
             case color_category::BLACK:
@@ -124,6 +147,7 @@ namespace piet {
         }
 
         bool operator==(color_category other) const {return category == other;}
+
         bool operator==(const color& other) const {
             if(category != other.category) return false;
             if(category != color_category::COLOR) return true;
@@ -133,6 +157,7 @@ namespace piet {
         color_category get_color_category(uint32_t hex);
         hue_trait get_color_hue(uint32_t hex);
         brightness_trait get_color_brightness(uint32_t hex);
+
     private:
         color_category category;
         hue_trait hue;

@@ -5,6 +5,8 @@ namespace piet{
 color color::BLACK = color{color::color_category::BLACK};
 color color::WHITE = color{color::color_category::WHITE};
 
+// We explicitly list all the colors instead of putting them in default
+// so all invalid pixel colors are counted as black
 color::color_category color::get_color_category(uint32_t hex){
     switch(hex){
         case 0xFFC0C0:
