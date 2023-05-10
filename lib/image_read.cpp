@@ -1,25 +1,31 @@
+/**
+ * 
+ * Boilerplate code to read a PNG image and load it into our image class.
+ * Mostly taken from stack overflow and github, I can't be bothered with oing this.
+ * 
+**/
+
 #include "image.h"
 
-#include "include/png.h"
+#include <png.h>
 
-bool has_ending (std::string const &full_string, std::string const &ending) {
-    if (full_string.length() >= ending.length()) {
-        return (0 == full_string.compare (full_string.length() - ending.length(), ending.length(), ending));
-    } else {
-        return false;
-    }
+
+namespace piet{
+/**
+ * Check if full_string ends in ending
+ * https://stackoverflow.com/questions/874134/find-out-if-string-ends-with-another-string-in-c
+**/
+bool has_ending(std::string const &full_string, std::string const &ending) {
+    if (full_string.length() >= ending.length()) 
+        return (0 == full_string.compare(full_string.length() - ending.length(), ending.length(), ending));
+    return false;
 }
 
-piet::image piet::read_image(const std::string& fname){
-    if(has_ending(fname, ".png") || has_ending(fname, ".PNG")) return piet::png_read(fname);
-    else return piet::EMPTY_IMAGE;
-}
-
-piet::image piet::png_read(const std::string &fname) {
+piet::image png_read(const std::string &fname) {
     FILE *fp = fopen(fname.c_str(), "rb");
     if (!fp){
         std::cerr<<"Can't open file\n";
-        return piet::EMPTY_IMAGE;
+        return EMPTY_IMAGE;
     }
     png_structp png;
     png_infop info_ptr;
@@ -28,20 +34,20 @@ piet::image piet::png_read(const std::string &fname) {
 
     if (png == NULL) {
         fclose(fp);
-        return piet::EMPTY_IMAGE;
+        return EMPTY_IMAGE;
     }
 
     info_ptr = png_create_info_struct(png);
     if (info_ptr == NULL) {
         fclose(fp);
         png_destroy_read_struct(&png, NULL, NULL);
-        return piet::EMPTY_IMAGE;
+        return EMPTY_IMAGE;
     }
 
     if (setjmp(png_jmpbuf(png))) {
         png_destroy_read_struct(&png, &info_ptr, NULL);
         fclose(fp);
-        return piet::EMPTY_IMAGE;
+        return EMPTY_IMAGE;
     }
 
     png_init_io(png, fp);
@@ -94,16 +100,22 @@ piet::image piet::png_read(const std::string &fname) {
 
     fclose(fp);
 
-    piet::image img(width, height);
+    // Construct the image object
+    image img(width, height);
     for(int y = 0; y < height; y++) {
         png_bytep row = row_pointers[y];
         for(int x = 0; x < width; x++) {
             png_bytep px = &(row[x * 4]);
-            // Do something awesome for each pixel here...
-//            printf("%4d, %4d = RGBA(%3d, %3d, %3d, %3d)\n", x, y, px[0], px[1], px[2], px[3]);
             img.set_pixel(y, x, px[0], px[1], px[2]);
         }
     }
 
     return img;
+}
+
+piet::image piet::read_image(const std::string& fname){
+    if(has_ending(fname, ".png") || has_ending(fname, ".PNG")) return piet::png_read(fname);
+    else return piet::EMPTY_IMAGE;
+}
+
 }

@@ -23,10 +23,10 @@ const piet::color::color_category piet::color::get_color_category(uint32_t hex){
         case 0x0000C0:
         case 0xFFC0FF:
         case 0xFF00FF:
-        case 0xC000C0:  return piet::color::color_category::COLOR;
-        case 0xFFFFFF:  return piet::color::color_category::WHITE;
+        case 0xC000C0:  return color::color_category::COLOR;
+        case 0xFFFFFF:  return color::color_category::WHITE;
         case 0x000000:
-        default:        return piet::color::color_category::BLACK;
+        default:        return color::color_category::BLACK;
     }
 }
 

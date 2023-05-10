@@ -18,7 +18,7 @@ cc_library(
         "util/enum_cast.h"
     ],
     deps = [
-        "@libpng//:lib"
+        "@org_libpng_libpng//:libpng"
     ],
     copts = ["/std:c++20"],
     visibility = ["//visibility:public"]

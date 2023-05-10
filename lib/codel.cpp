@@ -1,36 +1,47 @@
+/**
+ * The logic for constructing the codel grid and the blocks within.
+ * Also caches the next codels for each block for every DP/CC combination
+**/
+
 #include <queue>
 
 #include "codel.h"
 #include "image.h"
 
-piet::codel_block piet::codel_block::NULL_BLOCK{};
-piet::codel piet::codel::NULL_CODEL{};
+namespace piet{
 
-void piet::codel_grid::explore_block(std::vector<std::vector<bool>>& added,
-                   const piet::image& image,
-                   const piet::position& start){
-    piet::color block_color = image.get_pixel(start.get_row(), start.get_col());
-    std::cout<<"Exploring from "<<start<<", block color is "<<block_color<<"\n";
-    std::queue<piet::position> Q;
+codel_block codel_block::NULL_BLOCK{};
+codel codel::NULL_CODEL{};
+
+// Create codel block containing start codel.
+// Just a simple DFS on the grid
+void codel_grid::explore_block(std::vector<std::vector<bool>>& added,
+                   const image& image,
+                   const position& start){
+    color block_color = image.get_pixel(start.get_row(), start.get_col());
+    std::queue<position> Q;
     Q.push(start);
     added[start.get_row()][start.get_col()] = true;
     while(!Q.empty()){
-        piet::position cur = Q.front();
+        position cur = Q.front();
         Q.pop();
         codels[cur.get_row()][cur.get_col()] = {cur, block_color};
 
     }
 }
 
-piet::codel_grid::codel_grid(const piet::image& image): height(image.get_height()), width(image.get_width()){
-    codels.resize(height, std::vector<piet::codel>(width));
+codel_grid::codel_grid(const image& image): height(image.get_height()), width(image.get_width()){
+    codels.resize(height, std::vector<codel>(width));
 
     std::vector<std::vector<bool>> added(height, std::vector<bool>(width, false));
 
+    // Iterate through all codels and do flood search
     for(unsigned int row=0;row<height;row++){
         for(unsigned int col=0;col<width;col++){
             if(added[row][col]) continue;
             explore_block(added, image, {row, col});
         }
     }
+}
+
 }

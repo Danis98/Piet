@@ -1,12 +1,21 @@
+/**
+ * In Piet, colors are defined by hue & brightness.
+ * Hue can be red, yellow, green, cyan, blue and magenta.
+ * Brightness can be dark, normal or bright.
+ * There are also special white and black colors.
+ * 
+ * Instructions in Piet are defined by the delta of hue & brightness
+ * when we go from one codel block to another.
+ * Therefore, we need to be able to "subtract" colors: for example
+ * NORMAL GREEN - DARK RED = (1, 1)
+**/
+
 #ifndef PIET_COLOR_H
 #define PIET_COLOR_H
 
 #include <iostream>
-#include <array>
-#include <vector>
-#include <typeinfo>
-#include <memory>
 #include <cassert>
+#include <array>
 
 #include "image.h"
 #include "util/modular_counter.h"

@@ -1,0 +1,12 @@
+cc_binary(
+    name="piet",
+    srcs=[
+        "main.cpp",
+    ],
+    deps=[
+        "//lib:piet-lib",
+    ],
+    copts=[
+        "/std:c++20",
+    ],
+)

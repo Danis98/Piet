@@ -1,3 +1,16 @@
+/**
+ * When running the program, our execution state is given by the tuple
+ * (DP, CC, position, attempts) and a stack of integers.
+ * 
+ * DP (Direction Pointer): Direction in which the execution moves. Can be any of
+ * the 4 directions.
+ * CC (Codel Chooser): Used to disambiguate which codel should be the next. Can
+ * be left or right.
+ * 
+ * When the next codel is black or outside the image, DP and CC are modified.
+ * If this happens for 8 attempts, the program terminates.
+**/
+
 #ifndef PIET_STATE_H
 #define PIET_STATE_H
 
