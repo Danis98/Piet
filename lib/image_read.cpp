@@ -1,6 +1,6 @@
-#include <image.h>
+#include "image.h"
 
-#include <png.h>
+#include "include/png.h"
 
 bool has_ending (std::string const &full_string, std::string const &ending) {
     if (full_string.length() >= ending.length()) {
@@ -16,7 +16,7 @@ piet::image piet::read_image(const std::string& fname){
 }
 
 piet::image piet::png_read(const std::string &fname) {
-    FILE *fp = fopen(R"(C:\Users\danie\CLionProjects\Piet\samples\Piet_hello.png)", "rb");
+    FILE *fp = fopen(fname.c_str(), "rb");
     if (!fp){
         std::cerr<<"Can't open file\n";
         return piet::EMPTY_IMAGE;

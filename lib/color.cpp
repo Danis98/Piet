@@ -1,22 +1,10 @@
-#include <color.h>
-#include <image.h>
-
-
-constexpr char piet::hue::STR_RED[] = "RED";
-constexpr char piet::hue::STR_YELLOW[] = "YELLOW";
-constexpr char piet::hue::STR_GREEN[] = "GREEN";
-constexpr char piet::hue::STR_CYAN[] = "CYAN";
-constexpr char piet::hue::STR_BLUE[] = "BLUE";
-constexpr char piet::hue::STR_MAGENTA[] = "MAGENTA";
-
-constexpr char piet::brightness::STR_DARK[] = "DARK";
-constexpr char piet::brightness::STR_NORMAL[] = "NORMAL";
-constexpr char piet::brightness::STR_BRIGHT[] = "BRIGHT";
+#include "color.h"
+#include "image.h"
 
 piet::color piet::color::BLACK{piet::color::color_category::BLACK};
 piet::color piet::color::WHITE{piet::color::color_category::WHITE};
 
-piet::color::color_category piet::color::get_color_category(uint32_t hex){
+const piet::color::color_category piet::color::get_color_category(uint32_t hex){
     switch(hex){
         case 0xFFC0C0:
         case 0xFF0000:
@@ -42,7 +30,7 @@ piet::color::color_category piet::color::get_color_category(uint32_t hex){
     }
 }
 
-piet::hue::hue_ptr piet::color::get_color_hue(uint32_t hex){
+const piet::hue::hue_trait& piet::color::get_color_hue(uint32_t hex){
     switch(hex){
         case 0xFFC0C0:
         case 0xFF0000:
@@ -66,7 +54,7 @@ piet::hue::hue_ptr piet::color::get_color_hue(uint32_t hex){
     }
 }
 
-piet::brightness::brightness_ptr piet::color::get_color_brightness(uint32_t hex){
+const piet::brightness::brightness_trait& piet::color::get_color_brightness(uint32_t hex){
     switch(hex){
         case 0xFFC0C0:
         case 0xFFFFC0:

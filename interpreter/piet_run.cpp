@@ -1,10 +1,13 @@
 #include <iostream>
-#include <codel.h>
-#include <color.h>
-#include <image.h>
+
+#include "lib/codel.h"
+#include "lib/color.h"
+#include "lib/image.h"
 
 int main() {
-    piet::image img = piet::read_image(R"(C:\Users\danie\CLionProjects\Piet\samples\Piet_hello.png)");
+    std::cout<<"AAAAAAAAAA"<<std::endl;
+
+    piet::image img = piet::read_image(R"(C:\Users\danie\Piet\Piet\samples\Piet_hello.png)");
 
     std::cout<<"Image read_image: "<<img.get_width()<<"x"<<img.get_height()<<"\n";
 
@@ -15,6 +18,8 @@ int main() {
 //    }
 
     piet::codel_grid grid{img};
+
+    std::cout<<"EEEEEE"<<std::endl;
 
     return 0;
 }

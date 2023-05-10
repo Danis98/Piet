@@ -1,7 +1,7 @@
 #include <queue>
 
-#include <codel.h>
-#include <image.h>
+#include "codel.h"
+#include "image.h"
 
 piet::codel_block piet::codel_block::NULL_BLOCK{};
 piet::codel piet::codel::NULL_CODEL{};
